@@ -135,7 +135,7 @@ func TestSelect(t *testing.T) {
 
 	picked := Atomically(Select(
 		// always blocks; should never be selected
-		func(tx *Tx)int {
+		func(tx *Tx) int {
 			tx.Retry()
 			panic("unreachable")
 		},

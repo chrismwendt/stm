@@ -161,3 +161,9 @@ func VoidOperation(f func(*Tx)) Operation[struct{}] {
 		return struct{}{}
 	}
 }
+
+func AtomicModify[T any](v *Var[T], f func(T) T) {
+	Atomically(VoidOperation(func(tx *Tx) {
+		v.Set(tx, f(v.Get(tx)))
+	}))
+}
